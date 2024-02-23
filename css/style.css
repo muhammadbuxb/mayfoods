@@ -276,8 +276,8 @@
 
 .product-item img {
     transition: .5s;
-    height: 300px; /* Ensures the image takes up the full height of its container */
-    width: 300px; /* Ensures the image takes up the full width of its container */
+    height: 300px;
+    width: 300px; 
     object-fit: cover;
 }
 
