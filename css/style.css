@@ -276,6 +276,9 @@
 
 .product-item img {
     transition: .5s;
+    height: 100%; /* Ensures the image takes up the full height of its container */
+    width: 100%; /* Ensures the image takes up the full width of its container */
+    object-fit: cover;
 }
 
 .product-item:hover img {
