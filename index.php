@@ -70,7 +70,7 @@ include('header.php');
                     <p><i class="fa fa-check text-primary me-3"></i>Quality frozen Meats and Seafood</p>
                     <p><i class="fa fa-check text-primary me-3"></i>Premium Rice and Spices</p>
                     <p><i class="fa fa-check text-primary me-3"></i>Freshness guaranteed</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="about.html">Read More</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="about.php">Read More</a>
                 </div>
             </div>
         </div>
@@ -359,7 +359,7 @@ include('header.php');
                   </div>
                 </div>
                 <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                  <a class="btn btn-primary rounded-pill py-3 px-5" href="">Browse More Products</a>
+                  <a class="btn btn-primary rounded-pill py-3 px-5" href="product.php">Browse More Products</a>
                 </div>
               </div>
             </div>
@@ -773,7 +773,7 @@ include('header.php');
                   </div>
                 </div>
                 <div class="col-12 text-center">
-                  <a class="btn btn-primary rounded-pill py-3 px-5" href="">Browse More Products</a>
+                  <a class="btn btn-primary rounded-pill py-3 px-5" href="product.php">Browse More Products</a>
                 </div>
               </div>
             </div>
