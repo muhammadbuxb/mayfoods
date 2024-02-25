@@ -7,11 +7,11 @@
       <nav aria-label="breadcrumb animated slideInDown">
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item">
-            <a class="text-body" href="#">Home</a>
+            <a class="text-body" href="index.php">Home</a>
           </li>
-          <li class="breadcrumb-item">
+          <!-- <li class="breadcrumb-item">
             <a class="text-body" href="#">Pages</a>
-          </li>
+          </li> -->
           <li class="breadcrumb-item text-dark active" aria-current="page">
             Products
           </li>
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="col-lg-4">
-          <div class="">
+          <div style="margin-bottom:50px">
             <form action="" method="GET" class="input-group">
               <input type="text" class="form-control" placeholder="Search products..." name="q" />
               <button type="submit" class="btn btn-outline-primary" type="button">

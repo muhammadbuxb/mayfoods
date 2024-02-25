@@ -173,19 +173,34 @@
     border: 10px solid var(--primary);
     border-radius: 3rem;
 }
-
-@media (max-width: 768px) {
+@media (max-width: 844px) {
     #header-carousel .carousel-item {
         position: relative;
-        min-height: 450px;
+        
+        min-height: 450px; /* You may need to adjust this value based on your design */
     }
-    
+    #header-carousel .carousel-item h3{
+        font-size: 16px;
+    }
+    #header-carousel .carousel-item h1{
+        font-size: 20px;
+    }
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        top: 0; /* Ensure the image starts from the top */
+        left: 0; /* Ensure the image starts from the left */
     }
+    #header-carousel .carousel-item .carousel-caption{
+        width: 60%;
+    }
+    #header-carousel .carousel-control-prev,
+    #header-carousel .carousel-control-next {
+      display: none;
+    }
+    
 }
 
 .page-header {

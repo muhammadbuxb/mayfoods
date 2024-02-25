@@ -6,7 +6,7 @@
             <h1 class="display-3 mb-3 animated slideInDown">About Us</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-body" href="index.php">Home</a></li>
                     <!-- <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li> -->
                     <li class="breadcrumb-item text-dark active" aria-current="page">About Us</li>
                 </ol>

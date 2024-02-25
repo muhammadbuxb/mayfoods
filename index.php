@@ -9,7 +9,7 @@
         <div class="carousel-caption">
           <div class="container">
             <div class="row justify-content-start">
-              <div class="col-lg-7">
+              <div class="col-lg-5 col-md-4">
                 <h3 class="display-6 mb-10 animated slideInDown"> Premium cuts and convenient meals.
                 </h3>
                 <h1 class="display-3 mb-10 animated slideInDown"> Quality Frozen <span class="text-secondary">Meat
@@ -135,7 +135,7 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="">
+        <div style="margin-bottom:50px">
           <form action="" method="GET" class="input-group">
             <input type="text" class="form-control" placeholder="Search products..." name="q" />
             <button type="submit" class="btn btn-outline-primary" type="button">
