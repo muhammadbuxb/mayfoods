@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="../img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,14 +22,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -59,9 +59,9 @@
 
         <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
             
-            <img class="navbar-brand" src="img/mayFoodsLogo.png" style="height: 70px; width:60px">
+            <img class="navbar-brand" src="../img/mayFoodsLogo.png" style="height: 70px; width:60px">
             <a href="index.php" class="navbar-brand ms-4 ms-lg-0">
-                <h1 class="fw-bold text-secondary  m-0">May F<span class="text-primary">oo</span>ds</h1>
+                <h1 class="fw-bold text-secondary  m-0">Dashboard</h1>
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse">
@@ -69,28 +69,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.php" class="nav-item nav-link active">Home</a>
-                    <a href="about.php" class="nav-item nav-link">About Us</a>
-                    <a href="product.php" class="nav-item nav-link">Products</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="blog.php" class="dropdown-item">Blog</a>
-                            <a href="feature.php" class="dropdown-item">Our Features</a>
-                            <a href="testimonial.php" class="dropdown-item">Reviews</a>
-                            <!-- <a href="404.html" class="dropdown-item">404 Page</a> -->
-                        </div>
-                    </div>
-                    <a href="contact.php" class="nav-item nav-link">Contact Us</a>
+                    <a href="index.php" class="nav-item nav-link active">Products</a>
+                    <a href="about.php" class="nav-item nav-link">Add Products</a>
+                    <a href="product.php" class="nav-item nav-link">Orders</a>
+                    <a href="product.php" class="nav-item nav-link">Blog</a>
+                    <a href="product.php" class="nav-item nav-link">Add Blog</a>
+                    <a href="product.php" class="nav-item nav-link">Reviews</a>
+                   
                 </div>
                 <!-- <div class="d-none d-lg-flex ms-2"> -->
                     
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-user text-body"></small>
-                    </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="cart.php">
-                        <small class="fa fa-shopping-bag text-body"></small>
-                    </a>
+                    
                 <!-- </div> -->
             </div>
         </nav>
