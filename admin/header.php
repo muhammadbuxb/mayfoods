@@ -70,7 +70,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="index.php" class="nav-item nav-link active">Products</a>
-                    <a href="about.php" class="nav-item nav-link">Add Products</a>
+                    <a href="addProduct.php" class="nav-item nav-link">Add Products</a>
                     <a href="product.php" class="nav-item nav-link">Orders</a>
                     <a href="product.php" class="nav-item nav-link">Blog</a>
                     <a href="product.php" class="nav-item nav-link">Add Blog</a>
