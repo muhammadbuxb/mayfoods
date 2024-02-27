@@ -18,6 +18,7 @@ if (isset($_POST["submit"])) {
     $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $price = mysqli_real_escape_string($conn, $_POST['price']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
+    $category = mysqli_real_escape_string($conn, $_POST['category']); // New line for category
     $image = mysqli_real_escape_string($conn, $_FILES['product_image']['name']);
 
     // Upload image to directory
@@ -25,7 +26,7 @@ if (isset($_POST["submit"])) {
     $target_file = $target_dir . basename($_FILES["product_image"]["name"]);
     if (move_uploaded_file($_FILES["product_image"]["tmp_name"], $target_file)) {
         // Insert data into product table
-        $sql = "INSERT INTO product (productName, price, description, productImage) VALUES ('$product_name', '$price', '$description', '$image')";
+        $sql = "INSERT INTO product (productName, price, description, category, productImage) VALUES ('$product_name', '$price', '$description', '$category', '$image')"; // Updated query to include category
         if (mysqli_query($conn, $sql)) {
             // Set success alert message
             $alertMessage = "<div class='alert alert-success' role='alert'>Product uploaded successfully</div>";
@@ -42,19 +43,19 @@ if (isset($_POST["submit"])) {
     mysqli_close($conn);
 }
 ?>
+
 <div class="container-xxl py-6">
     <div class="container">
+        <!-- Alert Message -->
         <?php echo $alertMessage; ?>
+
         <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
             style="max-width: 500px;">
             <h1 class="display-5 mb-3">Add Product</h1>
-            <!-- <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p> -->
         </div>
         <div class="row g-5 justify-content-center">
-
             <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                <!-- <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p> -->
-                <form method="post" enctype="multipart/form-data">
+                <form action="add_product.php" method="post" enctype="multipart/form-data">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -72,34 +73,45 @@ if (isset($_POST["submit"])) {
                             </div>
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <!-- Dropdown for selecting category -->
+                                <select class="form-select" id="category" name="category">
+                                    <option value="" selected>Select Category</option>
+                                    <option value="Meat">Meat</option>
+                                    <option value="SeaFood">SeaFood</option>
+                                    <option value="Rice">Rice</option>
+                                    <option value="Chilli">Chilli</option>
+                                </select>
+                                <label for="category">Category</label>
+                            </div>
+                        </div>
+
                         <div class="col-12">
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="Add product description here"
-                                    id="description" style="height: 200px" name="description"></textarea>
+                                    id="description" style="height: 100px" name="description"></textarea>
                                 <label for="description">Product Description</label>
                             </div>
                         </div>
 
-                        <div class="col-md-6 mt-3" id="imagePreviewContainer" style="display: none;">
-                            <img id="imagePreview" src="#" alt="Selected Image" style="max-width: 100%; height: auto;">
+                        <div class="col-md-12 mt-3" id="imagePreviewContainer" style="display: none;">
+                            <img id="imagePreview" src="#" alt="Selected Image" style="width:200px; height: auto;">
                         </div>
-                        <div class="col-12">
-                            <div class="input-group">
-                                <label class="input-group-text" for="product_image" style="cursor: pointer;">Upload
-                                    Product Image</label>
+                        <div class="col-6">
+                            <div class="input-group ">
+                                <label class="input-group-text btn btn-primary rounded-pill py-3 px-5" for="product_image" style="cursor: pointer;">Upload
+                                    Image</label>
                                 <input type="file" class="form-control" id="product_image" name="product_image"
                                     accept="image/*" onchange="previewImage(this)" style="display: none;">
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" name="submit">Upload
-                                Product</button>
+                        <div class="col-4">
+                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit" name="submit">Upload Product</button>
                         </div>
                     </div>
                 </form>
-
-
             </div>
         </div>
     </div>
