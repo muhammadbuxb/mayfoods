@@ -3,6 +3,7 @@
     --primary: #3CB815;
     --secondary: #F65005;
     --light: #F7F8FC;
+    --grey: #c6c6c6;
     --dark: #111111;
 }
 
@@ -406,7 +407,7 @@
     height: 150px;
     border-radius: 50%;
     font-size: 50px;
-    background-color:steelblue;
+    background-color:rgb(232, 232, 232);
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
@@ -416,7 +417,7 @@
 
 .profile-icon i {
     font-size: 50px;
-    /* color: #ffffff; */
+    color: #bffaf5;
 }
 
 .profile-info {
