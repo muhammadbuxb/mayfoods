@@ -1,5 +1,5 @@
 <?php
-session_start();
+    // session_start();
 
 include('header.php');
 require_once("admin/db_connection.php");
@@ -7,8 +7,10 @@ require_once("admin/db_connection.php");
 // Check if the user is logged in
 if (!isset($_SESSION["loginUser"])) {
     // Redirect to login page or show an error message
-    header("Location: authentication.php");
-    exit;
+    // session_start();
+    // header("Location: ");
+    echo "<script>window.location.href = 'authentication.php';</script>";
+        exit;
 }
 
 ?>

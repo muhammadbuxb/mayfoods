@@ -1,4 +1,6 @@
-<?php include('header.php') ?>
+<?php 
+session_start();
+include('header.php') ?>
 
 
     <!-- Page Header Start -->
@@ -29,6 +31,7 @@
                     if (isset($_SESSION["loginUser"])) {
                         // User is logged in
                         echo "User is logged in.";
+                        echo $_SESSION["loginUser"];
                     } else {
                         // User is not logged in
                         echo "User is not logged in.";

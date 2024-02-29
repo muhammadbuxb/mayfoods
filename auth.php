@@ -20,10 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["loginEmail"]) && isset
 
     if ($result->num_rows == 1) {
         // User exists, create session and redirect to index.php
-        echo "User : Login";
         session_start();
         $_SESSION["loginUser"] = $loginEmail;
         header("Location: index.php");
+        echo "User : Login";
         exit;
     } else {
         // User does not exist or credentials are incorrect

@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 include('header.php');
 require_once("admin/db_connection.php");
@@ -7,16 +7,20 @@ require_once("admin/db_connection.php");
 // Check if the user is logged in
 if (!isset($_SESSION["loginUser"])) {
     // Redirect to login page or show an error message
-    header("Location: authentication.php");
+    // session_start();
+    // header("Location: index.php");
+    echo "<script>window.location.href = 'authentication.php';</script>";
     exit;
 }
 
-if(isset($_POST["logout"])){
-session_unset();
-session_destroy();
-header("Location: index.php"); // Redirect to index.php after logout
-exit;
+if (isset($_POST["logout"])) {
+    // session_start();
+    session_unset();
+    session_destroy();
 
+    // header("Location: index.php"); // Redirect to index.php after logout
+    echo "<script>window.location.href = 'index.php';</script>";
+        exit;
 }
 ?>
 

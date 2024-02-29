@@ -26,6 +26,7 @@
                       </a></p>
                     <p><a href="tel:+923423939058"><i class="fa fa-phone-alt me-3"></i>+92 342 3939 058</a></p>
                     <p><i class="fa fa-envelope me-3"></i>mayfoods@gmail.com</p>
+                    
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Quick Links</h4>
