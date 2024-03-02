@@ -1,113 +1,182 @@
-<?php include('header.php') ?>
+<?php 
+session_start();
+include('header.php');
+require_once("admin/db_connection.php");
 
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <h1 class="display-3 mb-3 animated slideInDown">Product Details</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="index.php">Home</a></li>
-                    <!-- <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li> -->
-                    <li class="breadcrumb-item text-dark active" aria-current="page">Product Detail</li>
-                </ol>
-            </nav>
-        </div>
+if (isset($_POST['submit'])) {
+    if (!isset($_SESSION["loginUser"])) {
+
+        echo "<script>window.location.href = 'authentication.php';</script>";
+
+    } else {
+
+
+        $quantity = $_POST["quantity"];
+        $kg = $_POST["kg"];
+
+        $loggedInEmail = $_SESSION["loginUser"];
+
+        // Query to fetch user data based on logged-in email
+        $sql = "SELECT * FROM users WHERE email = '$loggedInEmail'";
+        $result = $conn->query($sql);
+        $userData = $result->fetch_assoc();
+        $customerId = $userData['user_id'];
+
+        // Check if product ID is provided
+        if (isset($_GET['id'])) {
+            $productId = $_GET['id'];
+
+
+            // Insert the product into the cart table
+            $insertQuery = "INSERT INTO `cart` (`productId`, `quantity`, `weight`, `customerId`) VALUES ('$productId',$quantity,'$kg','$customerId' )";
+            if (mysqli_query($conn, $insertQuery)) {
+                echo "Product added to cart successfully.";
+                echo "<script>window.location.href = 'index.php';</script>";
+            } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+
+        } else {
+            echo "Product ID not provided.";
+        }
+
+        // Close database connection
+        mysqli_close($conn);
+    }
+
+}
+?>
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container">
+        <h1 class="display-3 mb-3 animated slideInDown">Product Details</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a class="text-body" href="index.php">Home</a></li>
+                <!-- <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li> -->
+                <li class="breadcrumb-item text-dark active" aria-current="page">Product Detail</li>
+            </ol>
+        </nav>
     </div>
-    <!-- Page Header End -->
+</div>
+<!-- Page Header End -->
+<?php
+if (isset($_GET['id'])) {
+    $productId = $_GET['id'];
+    $query = "SELECT * FROM product where id = $productId";
+    $result = mysqli_query($conn, $query);
 
- 
-    <!-- Shop Detail Start -->
-    <div class="container-fluid py-5">
-        <div class="row px-xl-5">
-            <div class="col-lg-5 pb-5">
-                <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner border">
-                        <div class="carousel-item active">
-                            <img class="w-100 h-100" src="img/whole_chicken_skinless.webp" alt="Image">
-                        </div>
-                        
-                    </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                    </a>
-                </div>
-            </div>
+    // Check if there are any products
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
 
-            <div class="col-lg-7 pb-5">
-                <h3 class="font-weight-semi-bold">Whole_Chicken_Skinless</h3>
-                <div class="d-flex mb-3">
-                    <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
+
+        ?>
+
+        <!-- Shop Detail Start -->
+        <div class="container-fluid py-5">
+            <div class="row px-xl-5">
+                <div class="col-lg-5 pb-5">
+                    <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner border">
+                            <div class="carousel-item active">
+                                <img class="w-100 h-100" src="img/<?= $row['productImage'] ?>" alt="Image">
+                            </div>
+
+                        </div>
+                        <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                            <i class="fa fa-2x fa-angle-left text-dark"></i>
+                        </a>
+                        <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                            <i class="fa fa-2x fa-angle-right text-dark"></i>
+                        </a>
                     </div>
-                    <small class="pt-1">(5 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4">$19.00</h3>
-                <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit clita ea. Sanc invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy. Accus labore stet, est lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd rebum.</p>
-                
-                <div class="d-flex mb-4">
-                    
-                    <form>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-1" name="color">
-                            <label class="custom-control-label" for="color-1">1 kg</label>
+
+                <div class="col-lg-7 pb-5">
+                    <h3 class="font-weight-semi-bold">
+                        <?= $row['productName'] ?>
+                    </h3>
+                    <div class="d-flex mb-3">
+                        <div class="text-primary mr-2">
+                            <small class="fas fa-star"></small>
+                            <small class="fas fa-star"></small>
+                            <small class="fas fa-star"></small>
+                            <small class="fas fa-star-half-alt"></small>
+                            <small class="far fa-star"></small>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-2" name="color">
-                            <label class="custom-control-label" for="color-2">5 kg</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-3" name="color">
-                            <label class="custom-control-label" for="color-3">10 kg</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-4" name="color">
-                            <label class="custom-control-label" for="color-4">20 kg</label>
-                        </div>
-                        
+                        <small class="pt-1">(5 Reviews)</small>
+                    </div>
+                    <h3 class="font-weight-semi-bold mb-4">
+                        $<?= $row['price'] ?>
+                    </h3>
+                    <p class="mb-4"><?= $row['description'] ?></p>
+
+                    <div class="d-flex mb-4">
+
+                        <form method="post">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="color-1" value="1kg" name="kg">
+                                <label class="custom-control-label" for="color-1">1 kg</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="color-2" value="5kg" name="kg">
+                                <label class="custom-control-label" for="color-2">5 kg</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="color-3" value="10kg" name="kg">
+                                <label class="custom-control-label" for="color-3">10 kg</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="color-4" value="20kg" name="kg">
+                                <label class="custom-control-label" for="color-4">20 kg</label>
+                            </div>
+                            <p></p>
+                            <p></p>
+                            <div class="input-group quantity mr-3" style="width: 130px;">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary btn-minus">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input name="quantity" id="quantityInput" type="text" class="form-control text-center"
+                                    value="1">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary btn-plus">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+                    <div style="padding:30px">
+                        <button name="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                            Cart</button>
+                    </div>
                     </form>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus" >
-                            <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="1">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div style="padding:30px">
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
-                    </div>
+
                 </div>
-                
+
             </div>
         </div>
         <div class="row px-xl-5">
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                     <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
-                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                    <!-- <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a> -->
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
                         <h4 class="mb-3">Product Description</h4>
-                        <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                        <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p>
+                        <p>
+                            <?= $row['description'] ?>
+                        </p>
+
                     </div>
-                    <div class="tab-pane fade" id="tab-pane-2">
+                    <!-- <div class="tab-pane fade" id="tab-pane-2">
                         <h4 class="mb-3">Additional Information</h4>
                         <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
                         <div class="row">
@@ -196,13 +265,37 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Shop Detail End -->
+        </div>
+        <!-- Shop Detail End -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var quantityInput = document.getElementById("quantityInput");
+                var btnPlus = document.querySelector('.btn-plus');
+                var btnMinus = document.querySelector('.btn-minus');
+
+                btnPlus.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent default form submission
+                    var currentValue = parseInt(quantityInput.value);
+                    quantityInput.value = currentValue + 1;
+                });
+
+                btnMinus.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent default form submission
+                    var currentValue = parseInt(quantityInput.value);
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                    }
+                });
+            });
+        </script>
+
+        <?php
+    }
+}
 
 
-
-    <?php include('footer.php') ?>
+include('footer.php') ?>

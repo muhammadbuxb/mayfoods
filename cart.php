@@ -1,5 +1,5 @@
 <?php
-    // session_start();
+    session_start();
 
 include('header.php');
 require_once("admin/db_connection.php");
@@ -10,7 +10,7 @@ if (!isset($_SESSION["loginUser"])) {
     // session_start();
     // header("Location: ");
     echo "<script>window.location.href = 'authentication.php';</script>";
-        exit;
+    exit;
 }
 
 ?>

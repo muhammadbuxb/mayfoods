@@ -1,6 +1,6 @@
+<??>
 <!DOCTYPE html>
 <html lang="en">
-<?=session_start()?>
 <head>
     <meta charset="utf-8">
     <title>May Foods</title>

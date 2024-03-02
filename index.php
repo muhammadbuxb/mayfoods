@@ -1,4 +1,6 @@
-<?php include('header.php');
+<?php 
+session_start();
+include('header.php');
 require_once("admin/db_connection.php");
 
 // Check connection
@@ -204,15 +206,15 @@ if ($conn->connect_error) {
                     </span>
                   </div>
                   <div class="d-flex border-top">
-                    <small class="w-50 text-center border-end py-2">
-                      <a class="text-body" href=""><i class="fa fa-eye text-primary me-2"></i>View
-                        detail</a>
-                    </small>
-                    <small class="w-50 text-center py-2">
-                      <a class="text-body" href=""><i class="fa fa-shopping-bag text-primary me-2"></i>Add
-                        to cart</a>
-                    </small>
-                  </div>
+            <small class="w-50 text-center border-end py-2">
+              <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i class="fa fa-eye text-primary me-2"></i>View
+                detail</a>
+            </small>
+            <small class="w-50 text-center py-2">
+              <a class="text-body" href="addToCart.php?id=<?=$row['id']?>"><i class="fa fa-shopping-bag text-primary me-2"></i>Add
+                to cart</a>
+            </small>
+          </div>
                 </div>
               </div>
             <?php }
