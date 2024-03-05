@@ -26,6 +26,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateQuery = "UPDATE cart SET quantity = $quantity WHERE productId = $productId AND customerId = $customerId ";
         $conn->query($updateQuery);
     }
+     elseif (isset($_POST['remove_item'])) {
+        $productId = $_POST['product_id'];
+        $quantity = $_POST['quantity'];
+        $customerId = $_POST['customerId'];
+        $quantity++; // Increase quantity by 1
+        $updateQuery = "DELETE FROM cart WHERE productId = $productId AND customerId = $customerId ";
+        $conn->query($updateQuery);
+    }
 }
 
 ?>
@@ -106,6 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td class="align-middle">
                                     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                                         <input type="hidden" name="product_id" value="<?php echo $row['productId']; ?>">
+                                        <input type="hidden" name="customerId" value="<?php echo $row['customerId']; ?>">
                                         <button type="submit" name="remove_item" class="btn btn-sm btn-primary"><i
                                                 class="fa fa-times"></i></button>
                                     </form>
