@@ -1,16 +1,31 @@
 <?php
-    session_start();
+session_start();
 
 include('header.php');
 require_once("admin/db_connection.php");
 
 // Check if the user is logged in
 if (!isset($_SESSION["loginUser"])) {
-    // Redirect to login page or show an error message
-    // session_start();
-    // header("Location: ");
     echo "<script>window.location.href = 'authentication.php';</script>";
     exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['minus_quantity'])) {
+        $productId = $_POST['product_id'];
+        $quantity = $_POST['quantity'];
+        $customerId = $_POST['customerId'];
+        $quantity = max(1, $quantity - 1); // Decrease quantity by 1
+        $updateQuery = "UPDATE cart SET quantity = $quantity WHERE productId = $productId AND customerId = $customerId ";
+        $conn->query($updateQuery);
+    } elseif (isset($_POST['plus_quantity'])) {
+        $productId = $_POST['product_id'];
+        $quantity = $_POST['quantity'];
+        $customerId = $_POST['customerId'];
+        $quantity++; // Increase quantity by 1
+        $updateQuery = "UPDATE cart SET quantity = $quantity WHERE productId = $productId AND customerId = $customerId ";
+        $conn->query($updateQuery);
+    }
 }
 
 ?>
@@ -37,130 +52,72 @@ if (!isset($_SESSION["loginUser"])) {
             <table class="table table-bordered text-center mb-0">
                 <thead class="text-dark">
                     <tr>
-                        <th>Products</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Remove</th>
+                        <th class="align-middle">Products</th>
+                        <th class="align-middle">Price</th>
+                        <th class="align-middle">Quantity</th>
+                        <th class="align-middle">Weight</th>
+                        <th class="align-middle">Total</th>
+                        <th class="align-middle">Remove</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
-                    <tr>
-                        <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Beef_liver
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                    class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="img/product-2.jpg" alt="" style="width: 50px;">Beef_mince
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm  text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                    class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="img/product-3.jpg" alt="" style="width: 50px;"> Mutton_Leg
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                    class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;"> Mutton_Brain
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm  text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                    class="fa fa-times"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;">
-                            Whole_Chicken_Skinless
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm  text-center" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="align-middle">$150</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                    class="fa fa-times"></i></button></td>
-                    </tr>
+                    <?php
+                    $loggedInEmail = $_SESSION["loginUser"];
+                    $sql = "SELECT cart.productId, cart.customerId ,cart.weight, cart.quantity, product.productName, product.price FROM cart INNER JOIN product ON cart.productId = product.id INNER JOIN users ON cart.customerId = users.user_id WHERE users.email = '$loggedInEmail';";
+                    $result = $conn->query($sql);
+                    $subtotal = 0;
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <tr>
+                                <td class="align-middle">
+                                    <?php echo $row['productName']; ?>
+                                </td>
+                                <td class="align-middle">
+                                    <?php echo '$' . $row['price']; ?>
+                                </td>
+                                <td class="align-middle">
+                                <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+                                        <input type="hidden" name="product_id" value="<?php echo $row['productId']; ?>">
+                                        <input type="hidden" name="quantity" value="<?php echo $row['quantity']; ?>">
+                                        <input type="hidden" name="customerId" value="<?php echo $row['customerId']; ?>">
+                                        <div class="input-group quantity mr-3" style="width: 130px;">
+                                            <div class="input-group-btn">
+                                                <button type="submit" name="minus_quantity" class="btn btn-primary btn-minus">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                            <input name="quantity_display" type="text" class="form-control text-center"
+                                                value="<?php echo $row['quantity']; ?>" readonly>
+                                            <div class="input-group-btn">
+                                                <button type="submit" name="plus_quantity" class="btn btn-primary btn-plus">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="align-middle">
+                                    <?= $row['weight'] ?>
+                                </td>
+                                <td class="align-middle">
+                                    <?php echo '$' . ($row['quantity'] * $row['price']); ?>
+                                </td>
+                                <td class="align-middle">
+                                    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+                                        <input type="hidden" name="product_id" value="<?php echo $row['productId']; ?>">
+                                        <button type="submit" name="remove_item" class="btn btn-sm btn-primary"><i
+                                                class="fa fa-times"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php
+                            $subtotal += ($row['quantity'] * $row['price']);
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No items in cart.</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -183,17 +140,23 @@ if (!isset($_SESSION["loginUser"])) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Name</h6>
-                            <h6 class="font-weight-medium"><?=$userData['name']?></h6>
+                            <h6 class="font-weight-medium">
+                                <?= $userData['name'] ?>
+                            </h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Phone</h6>
-                            <h6 class="font-weight-medium"><?=$userData['phone']?></h6>
+                            <h6 class="font-weight-medium">
+                                <?= $userData['phone'] ?>
+                            </h6>
                         </div>
                     </div>
                     <div class="card-footer bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Address</h5>
-                            <p class="font-weight-bold"><?=$userData['address']?></p>
+                            <p class="font-weight-bold">
+                                <?= $userData['address'] ?>
+                            </p>
                         </div>
                         <!-- <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button> -->
                     </div>
@@ -212,7 +175,9 @@ if (!isset($_SESSION["loginUser"])) {
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3 pt-1">
                         <h6 class="font-weight-medium">Subtotal</h6>
-                        <h6 class="font-weight-medium">$150</h6>
+                        <h6 class="font-weight-medium">$
+                            <?= $subtotal ?>
+                        </h6>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
@@ -222,15 +187,38 @@ if (!isset($_SESSION["loginUser"])) {
                 <div class="card-footer bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold">$160</h5>
+                        <h5 class="font-weight-bold">$
+                            <?= $subtotal + 10 ?>
+                        </h5>
                     </div>
                     <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
                 </div>
             </div>
         </div>
+        <!-- Remaining part of your code -->
     </div>
 </div>
 <!-- Cart End -->
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var quantityInput = document.getElementById("quantityInput");
+        var btnPlus = document.querySelector('.btn-plus');
+        var btnMinus = document.querySelector('.btn-minus');
 
+        btnPlus.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default form submission
+            var currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+        });
+
+        btnMinus.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default form submission
+            var currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+    });
+</script> -->
 
 <?php include('footer.php') ?>
