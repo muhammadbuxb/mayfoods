@@ -25,8 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $quantity++; // Increase quantity by 1
         $updateQuery = "UPDATE cart SET quantity = $quantity WHERE productId = $productId AND customerId = $customerId ";
         $conn->query($updateQuery);
-    }
-     elseif (isset($_POST['remove_item'])) {
+    } elseif (isset($_POST['remove_item'])) {
         $productId = $_POST['product_id'];
         $quantity = $_POST['quantity'];
         $customerId = $_POST['customerId'];
@@ -34,7 +33,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateQuery = "DELETE FROM cart WHERE productId = $productId AND customerId = $customerId ";
         $conn->query($updateQuery);
     }
+
+    // Check if checkout button is clicked
+    if (isset($_POST['checkout'])) {
+        // Insert user details into orders table
+        $loggedInEmail = $_SESSION["loginUser"];
+        $getUserDataQuery = "SELECT * FROM users WHERE email = '$loggedInEmail'";
+        $userDataResult = $conn->query($getUserDataQuery);
+    
+        if ($userDataResult->num_rows > 0) {
+            $userData = $userDataResult->fetch_assoc();
+            $userId = $userData['user_id'];
+            $name = $userData['name'];
+            $phone = $userData['phone'];
+            $address = $userData['address'];
+            $total = $_POST['total'];
+            // Insert user details into orders table
+            $insertOrderQuery = "INSERT INTO orders (user_id, name, phone, address, price, status) VALUES ('$userId', '$name', '$phone', '$address', '$total', 'Pending')";
+            $conn->query($insertOrderQuery);
+    
+            // Get the orderId of the last added row
+            $orderId = $conn->insert_id;
+    
+            // Insert cart items into order_items table
+            $getCartItemsQuery = "SELECT cart.productId, cart.customerId ,cart.weight, cart.quantity, product.productName, product.price FROM cart INNER JOIN product ON cart.productId = product.id INNER JOIN users ON cart.customerId = users.user_id WHERE users.email = '$loggedInEmail';";
+            $cartItemsResult = $conn->query($getCartItemsQuery);
+    
+            if ($cartItemsResult->num_rows > 0) {
+                while ($cartItem = $cartItemsResult->fetch_assoc()) {
+                    $productId = $cartItem['productId'];
+                    $quantity = $cartItem['quantity'];
+                    $price = $cartItem['price'];
+                    $weight = $cartItem['weight'];
+    
+                    // Insert cart item into order_items table
+                    $insertOrderItemQuery = "INSERT INTO order_items (order_id, product_id, quantity, price, weight) VALUES ($orderId,$productId,$quantity,$price, '$weight');";
+                    $conn->query($insertOrderItemQuery);
+                }
+            }
+    
+            // Clear the cart after checkout
+            $clearCartQuery = "DELETE FROM cart WHERE customerId = '$userId'";
+            $conn->query($clearCartQuery);
+        }
+    }
 }
+
+
 
 ?>
 
@@ -85,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <?php echo '$' . $row['price']; ?>
                                 </td>
                                 <td class="align-middle">
-                                <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+                                    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
                                         <input type="hidden" name="product_id" value="<?php echo $row['productId']; ?>">
                                         <input type="hidden" name="quantity" value="<?php echo $row['quantity']; ?>">
                                         <input type="hidden" name="customerId" value="<?php echo $row['customerId']; ?>">
@@ -167,7 +212,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?= $userData['address'] ?>
                             </p>
                         </div>
-                        <!-- <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button> -->
                     </div>
                 </div>
                 <?php
@@ -194,40 +238,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <div class="card-footer bg-transparent">
+                    <form method="post">
                     <div class="d-flex justify-content-between mt-2">
+                    <input type="hidden" name="total" value="<?php echo $subtotal+10?>">
                         <h5 class="font-weight-bold">Total</h5>
                         <h5 class="font-weight-bold">$
                             <?= $subtotal + 10 ?>
                         </h5>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+
+                        <button type="submit" name="checkout" class="btn btn-block btn-primary my-3 py-3">Proceed To
+                            Checkout</button>
+                    </form>
                 </div>
             </div>
         </div>
         <!-- Remaining part of your code -->
     </div>
 </div>
-<!-- Cart End -->
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var quantityInput = document.getElementById("quantityInput");
-        var btnPlus = document.querySelector('.btn-plus');
-        var btnMinus = document.querySelector('.btn-minus');
 
-        btnPlus.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default form submission
-            var currentValue = parseInt(quantityInput.value);
-            quantityInput.value = currentValue + 1;
-        });
-
-        btnMinus.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default form submission
-            var currentValue = parseInt(quantityInput.value);
-            if (currentValue > 1) {
-                quantityInput.value = currentValue - 1;
-            }
-        });
-    });
-</script> -->
 
 <?php include('footer.php') ?>

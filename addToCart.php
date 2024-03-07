@@ -26,7 +26,7 @@ if (!isset($_SESSION["loginUser"])) {
             // Insert the product into the cart table
             $insertQuery = "INSERT INTO `cart` (`productId`, `quantity`, `weight`, `customerId`) VALUES ('$productId',1,'1kg','$customerId' )";
             if (mysqli_query($conn, $insertQuery)) {
-                echo "Product added to cart successfully.";
+                // echo "Product added to cart successfully.";
                 echo "<script>window.location.href = 'index.php';</script>";
             } else {
                 echo "Error: " . mysqli_error($conn);
