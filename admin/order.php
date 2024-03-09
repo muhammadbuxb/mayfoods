@@ -1,4 +1,8 @@
-<?php include('header.php'); ?>
+<?php include('header.php'); 
+
+require_once("db_connection.php");
+
+?>
 
 
 <div class="container-fluid pt-5" style="margin-top:20vh">
@@ -8,76 +12,67 @@
                 <h1 class="display-5 mb-3">Orders</h1>
                 <!-- <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p> -->
             </div>
-            <table class="table table-bordered text-center mb-0">
-                <thead class="text-dark">
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Customer Name</th>
-                        <th>Phone No</th>
-                        <th>Address</th>
-                        <th>Price</th>
-                        <th>View </th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody class="align-middle">
-                    <tr>
-                        <td class="align-middle">01</td>
-                        <td class="align-middle">sameer </td>
-                        <td class="align-middle">+920303030303</td>
-                        <td class="align-middle">Hyderabad</td>
-                        <td class="align-middle">$20</td>
-                        <td class="align-middle"><a href="#">Order details</a></td>
-                        <td class="align-middle"><button class="btn-primary text-white" >Pending</button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">02</td>
-                        <td class="align-middle">sameer </td>
-                        <td class="align-middle">+920303030303</td>
-                        <td class="align-middle">Hyderabad</td>
-                        <td class="align-middle">$20</td>
-                        <td class="align-middle"><a href="#">Order details</a></td>
-                        <td class="align-middle"><button class="btn-primary text-white" >Pending</button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">03</td>
-                        <td class="align-middle">sameer </td>
-                        <td class="align-middle">+920303030303</td>
-                        <td class="align-middle">Hyderabad</td>
-                        <td class="align-middle">$20</td>
-                        <td class="align-middle"><a href="#">Order details</a></td>
-                        <td class="align-middle"><button class="btn-secondary text-white" >Delivered</button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">04</td>
-                        <td class="align-middle">sameer </td>
-                        <td class="align-middle">+920303030303</td>
-                        <td class="align-middle">Hyderabad</td>
-                        <td class="align-middle">$20</td>
-                        <td class="align-middle"><a href="#">Order details</a></td>
-                        <td class="align-middle"><button class="btn-secondary text-white" >Delivered</button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">05</td>
-                        <td class="align-middle">sameer </td>
-                        <td class="align-middle">+920303030303</td>
-                        <td class="align-middle">Hyderabad</td>
-                        <td class="align-middle">$20</td>
-                        <td class="align-middle"><a href="#">Order details</a></td>
-                        <td class="align-middle"><button class="btn-secondary text-white" >Delivered</button></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">06</td>
-                        <td class="align-middle">sameer </td>
-                        <td class="align-middle">+920303030303</td>
-                        <td class="align-middle">Hyderabad</td>
-                        <td class="align-middle">$20</td>
-                        <td class="align-middle"><a href="#">Order details</a></td>
-                        <td class="align-middle"><button class="btn-secondary text-white" >Delivered</button></td>
-                    </tr>
-                   
-                </tbody>
-            </table>
+            <div class="col-lg-12 table-responsive mb-5">
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="text-dark">
+                        <tr>
+                            <th class="align-middle">Order ID</th>
+                            <th class="align-middle">Name</th>
+                            <th class="align-middle">Phone</th>
+                            <th class="align-middle">Address</th>
+                            <th class="align-middle">Price</th>
+                            <th class="align-middle">Status</th>
+                            <th class="align-middle">View</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        <?php
+                       
+                        $sql = "SELECT * FROM orders";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                ?>
+                                <tr>
+                                    <td class="align-middle">
+                                        <?php echo $row['order_id']; ?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <?php echo $row['name']; ?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <?php echo $row['phone']; ?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <?php echo $row['address']; ?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <?php echo '$' . $row['price']; ?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a href=""
+                                            class="btn btn-sm btn-secondary">
+                                            <?php echo $row['status']; ?> 
+                                        </a>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a href="vieworder.php?order_id=<?php echo $row['order_id']; ?>"
+                                            class="btn btn-sm btn-primary">
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='7'>No orders found.</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
         
     </div>
