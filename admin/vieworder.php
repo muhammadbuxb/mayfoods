@@ -30,8 +30,9 @@ require_once("db_connection.php");
                     </thead>
                     <tbody class="align-middle">
                         <?php
-                        $loggedInEmail = $_SESSION["loginUser"];
-                        $sql = "SELECT * FROM orders WHERE user_id = (SELECT user_id FROM users WHERE email = '$loggedInEmail')";
+$orderId = $_GET['order_id'];
+                        // $loggedInEmail = $_SESSION["loginUser"];
+                        $sql = "SELECT * FROM orders WHERE order_id = $orderId ";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -85,8 +86,9 @@ require_once("db_connection.php");
             <tbody class="align-middle">
                 <?php
                 // Get order ID
-                $loggedInEmail = $_SESSION["loginUser"];
-                $sql = "SELECT * FROM orders WHERE user_id = (SELECT user_id FROM users WHERE email = '$loggedInEmail')";
+                // $loggedInEmail = $_SESSION["loginUser"];
+$orderId = $_GET['order_id'];
+                $sql = "SELECT * FROM orders WHERE order_id = $orderId";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     $row = $result->fetch_assoc();
