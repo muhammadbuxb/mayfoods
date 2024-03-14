@@ -1,5 +1,17 @@
-<?php include('header.php'); ?>
+<?php 
+session_start();
+include('header.php');
+require_once("db_connection.php");
 
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+// if (!isset($_SESSION["admin_id"])) {
+//   echo "<script>window.location.href = 'login.php';</script>";
+//   exit;
+// }
+?>
 <?php
 // Initialize alert message
 $alertMessage = "";
@@ -55,7 +67,7 @@ if (isset($_POST["submit"])) {
         </div>
         <div class="row g-5 justify-content-center">
             <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                <form action="add_product.php" method="post" enctype="multipart/form-data">
+                <form  method="post" enctype="multipart/form-data">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -78,7 +90,9 @@ if (isset($_POST["submit"])) {
                                 <!-- Dropdown for selecting category -->
                                 <select class="form-select" id="category" name="category">
                                     <option value="" selected>Select Category</option>
-                                    <option value="Meat">Meat</option>
+                                    <option value="Beef">Beef</option>
+                                    <option value="Chicken">Chicken</option>
+                                    <option value="Mutton">Mutton</option>
                                     <option value="SeaFood">SeaFood</option>
                                     <option value="Rice">Rice</option>
                                     <option value="Chilli">Chilli</option>

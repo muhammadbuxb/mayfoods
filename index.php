@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('header.php');
 require_once("admin/db_connection.php");
@@ -132,7 +132,6 @@ if ($conn->connect_error) {
 </div>
 <!-- Feature End -->
 
-
 <!-- Product Start -->
 <div class="container-xxl py-5">
   <div class="container">
@@ -143,31 +142,28 @@ if ($conn->connect_error) {
           <!-- <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p> -->
         </div>
       </div>
-      <div class="col-lg-4">
-        <div style="margin-bottom:50px">
-          <form action="" method="GET" class="input-group">
-            <input type="text" class="form-control" placeholder="Search products..." name="q" />
-            <button type="submit" class="btn btn-outline-primary" type="button">
-              <i class="fa fa-search"></i>
-            </button>
-          </form>
-        </div>
-      </div>
-      <div class="col-lg-4 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+
+      <div class="col-lg-8 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
         <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
           <li class="nav-item me-2">
             <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#tab-1">All</a>
           </li>
           <li class="nav-item me-2">
-            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-2">Meat</a>
+            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-2">Beef</a>
           </li>
-          <li class="nav-item me-0">
+          <li class="nav-item me-2">
+            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-6">Chicken</a>
+          </li>
+          <li class="nav-item me-2">
+            <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-7">Mutton</a>
+          </li>
+          <li class="nav-item me-2">
             <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-3">SeaFood</a>
           </li>
-          <li class="nav-item me-0">
+          <li class="nav-item me-2">
             <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-4">Rice</a>
           </li>
-          <li class="nav-item me-0">
+          <li class="nav-item me-2">
             <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="#tab-5">Chilli</a>
           </li>
         </ul>
@@ -179,56 +175,7 @@ if ($conn->connect_error) {
         <div class="row g-4">
           <?php
 
-          $query = "SELECT * FROM product";
-          $result = mysqli_query($conn, $query);
-
-          // Check if there are any products
-          if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-              // $discountedPrice = $row['price']+$row['price'];
-              ?>
-
-              <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="product-item">
-                  <div class="position-relative bg-light overflow-hidden">
-                    <img class="img-fluid w-100" src="img/<?= $row['productImage'] ?>" alt="" />
-
-                  </div>
-                  <div class="text-center p-4">
-                    <a class="d-block h5 mb-2" href="">
-                      <?= $row['productName'] ?>
-                    </a>
-                    <span class="text-primary me-1">$
-                      <?= $row['price'] ?>
-                    </span>
-                    <span class="text-body text-decoration-line-through">$
-                      <?= ($row['price']) + ($row['price'] * 0.25); ?>
-                    </span>
-                  </div>
-                  <div class="d-flex border-top">
-            <small class="w-50 text-center border-end py-2">
-              <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i class="fa fa-eye text-primary me-2"></i>View
-                detail</a>
-            </small>
-            <small class="w-50 text-center py-2">
-              <a class="text-body" href="addToCart.php?id=<?=$row['id']?>"><i class="fa fa-shopping-bag text-primary me-2"></i>Add
-                to cart</a>
-            </small>
-          </div>
-                </div>
-              </div>
-            <?php }
-          } else {
-            echo "No products found.";
-          } ?>
-
-        </div>
-      </div>
-      <div id="tab-2" class="tab-pane fade show p-0">
-        <div class="row g-4">
-          <?php
-
-          $query = "SELECT * FROM product  WHERE category = 'Meat' ";
+          $query = "SELECT * FROM product ORDER BY id DESC LIMIT 20";
           $result = mysqli_query($conn, $query);
 
           // Check if there are any products
@@ -256,11 +203,64 @@ if ($conn->connect_error) {
                   </div>
                   <div class="d-flex border-top">
                     <small class="w-50 text-center border-end py-2">
-                      <a class="text-body" href=""><i class="fa fa-eye text-primary me-2"></i>View
+                      <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-eye text-primary me-2"></i>View
                         detail</a>
                     </small>
                     <small class="w-50 text-center py-2">
-                      <a class="text-body" href=""><i class="fa fa-shopping-bag text-primary me-2"></i>Add
+                      <a class="text-body" href="addToCart.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-shopping-bag text-primary me-2"></i>Add
+                        to cart</a>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            <?php }
+          } else {
+            echo "No products found.";
+          } ?>
+
+        </div>
+      </div>
+      <div id="tab-2" class="tab-pane fade show p-0">
+        <div class="row g-4">
+          <?php
+
+          $query = "SELECT * FROM product  WHERE category = 'Beef' LIMIT 20 ";
+          $result = mysqli_query($conn, $query);
+
+          // Check if there are any products
+          if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+              // $discountedPrice = $row['price']+$row['price'];
+              ?>
+
+              <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="product-item">
+                  <div class="position-relative bg-light overflow-hidden">
+                    <img class="img-fluid w-100" src="img/<?= $row['productImage'] ?>" alt="" />
+
+                  </div>
+                  <div class="text-center p-4">
+                    <a class="d-block h5 mb-2" href="">
+                      <?= $row['productName'] ?>
+                    </a>
+                    <span class="text-primary me-1">$
+                      <?= $row['price'] ?>
+                    </span>
+                    <span class="text-body text-decoration-line-through">$
+                      <?= ($row['price']) + ($row['price'] * 0.25); ?>
+                    </span>
+                  </div>
+                  <div class="d-flex border-top">
+                    <small class="w-50 text-center border-end py-2">
+                      <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-eye text-primary me-2"></i>View
+                        detail</a>
+                    </small>
+                    <small class="w-50 text-center py-2">
+                      <a class="text-body" href="addToCart.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-shopping-bag text-primary me-2"></i>Add
                         to cart</a>
                     </small>
                   </div>
@@ -277,7 +277,7 @@ if ($conn->connect_error) {
         <div class="row g-4">
           <?php
 
-          $query = "SELECT * FROM product   WHERE category = 'SeaFood' ";
+          $query = "SELECT * FROM product   WHERE category = 'SeaFood' LIMIT 20 ";
           $result = mysqli_query($conn, $query);
 
           // Check if there are any products
@@ -305,11 +305,13 @@ if ($conn->connect_error) {
                   </div>
                   <div class="d-flex border-top">
                     <small class="w-50 text-center border-end py-2">
-                      <a class="text-body" href=""><i class="fa fa-eye text-primary me-2"></i>View
+                      <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-eye text-primary me-2"></i>View
                         detail</a>
                     </small>
                     <small class="w-50 text-center py-2">
-                      <a class="text-body" href=""><i class="fa fa-shopping-bag text-primary me-2"></i>Add
+                      <a class="text-body" href="addToCart.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-shopping-bag text-primary me-2"></i>Add
                         to cart</a>
                     </small>
                   </div>
@@ -326,7 +328,7 @@ if ($conn->connect_error) {
         <div class="row g-4">
           <?php
 
-          $query = "SELECT * FROM product   WHERE category = 'Rice' ";
+          $query = "SELECT * FROM product   WHERE category = 'Rice' LIMIT 20";
           $result = mysqli_query($conn, $query);
 
           // Check if there are any products
@@ -338,7 +340,7 @@ if ($conn->connect_error) {
               <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="product-item">
                   <div class="position-relative bg-light overflow-hidden">
-                    <img class="img-fluid w-100" src="../img/<?= $row['productImage'] ?>" alt="" />
+                    <img class="img-fluid w-100" src="img/<?= $row['productImage'] ?>" alt="" />
 
                   </div>
                   <div class="text-center p-4">
@@ -354,11 +356,13 @@ if ($conn->connect_error) {
                   </div>
                   <div class="d-flex border-top">
                     <small class="w-50 text-center border-end py-2">
-                      <a class="text-body" href=""><i class="fa fa-eye text-primary me-2"></i>View
+                      <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-eye text-primary me-2"></i>View
                         detail</a>
                     </small>
                     <small class="w-50 text-center py-2">
-                      <a class="text-body" href=""><i class="fa fa-shopping-bag text-primary me-2"></i>Add
+                      <a class="text-body" href="addToCart.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-shopping-bag text-primary me-2"></i>Add
                         to cart</a>
                     </small>
                   </div>
@@ -375,7 +379,7 @@ if ($conn->connect_error) {
         <div class="row g-4">
           <?php
 
-          $query = "SELECT * FROM product   WHERE category = 'Chilli' ";
+          $query = "SELECT * FROM product   WHERE category = 'Chilli' LIMIT 20";
           $result = mysqli_query($conn, $query);
 
           // Check if there are any products
@@ -387,7 +391,7 @@ if ($conn->connect_error) {
               <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="product-item">
                   <div class="position-relative bg-light overflow-hidden">
-                    <img class="img-fluid w-100" src="../img/<?= $row['productImage'] ?>" alt="" />
+                    <img class="img-fluid w-100" src="img/<?= $row['productImage'] ?>" alt="" />
 
                   </div>
                   <div class="text-center p-4">
@@ -403,11 +407,13 @@ if ($conn->connect_error) {
                   </div>
                   <div class="d-flex border-top">
                     <small class="w-50 text-center border-end py-2">
-                      <a class="text-body" href=""><i class="fa fa-eye text-primary me-2"></i>View
+                      <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-eye text-primary me-2"></i>View
                         detail</a>
                     </small>
                     <small class="w-50 text-center py-2">
-                      <a class="text-body" href=""><i class="fa fa-shopping-bag text-primary me-2"></i>Add
+                      <a class="text-body" href="addToCart.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-shopping-bag text-primary me-2"></i>Add
                         to cart</a>
                     </small>
                   </div>
@@ -420,11 +426,117 @@ if ($conn->connect_error) {
 
         </div>
       </div>
+      <div id="tab-6" class="tab-pane fade show p-0">
+        <div class="row g-4">
+          <?php
+
+          $query = "SELECT * FROM product   WHERE category = 'Chicken' LIMIT 20";
+          $result = mysqli_query($conn, $query);
+
+          // Check if there are any products
+          if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+              // $discountedPrice = $row['price']+$row['price'];
+              ?>
+
+              <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="product-item">
+                  <div class="position-relative bg-light overflow-hidden">
+                    <img class="img-fluid w-100" src="img/<?= $row['productImage'] ?>" alt="" />
+
+                  </div>
+                  <div class="text-center p-4">
+                    <a class="d-block h5 mb-2" href="">
+                      <?= $row['productName'] ?>
+                    </a>
+                    <span class="text-primary me-1">$
+                      <?= $row['price'] ?>
+                    </span>
+                    <span class="text-body text-decoration-line-through">$
+                      <?= ($row['price']) + ($row['price'] * 0.25); ?>
+                    </span>
+                  </div>
+                  <div class="d-flex border-top">
+                    <small class="w-50 text-center border-end py-2">
+                      <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-eye text-primary me-2"></i>View
+                        detail</a>
+                    </small>
+                    <small class="w-50 text-center py-2">
+                      <a class="text-body" href="addToCart.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-shopping-bag text-primary me-2"></i>Add
+                        to cart</a>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            <?php }
+          } else {
+            echo "No products found.";
+          } ?>
+
+        </div>
+      </div>
+      <div id="tab-7" class="tab-pane fade show p-0">
+        <div class="row g-4">
+          <?php
+
+          $query = "SELECT * FROM product  WHERE category = 'Mutton' LIMIT 20";
+          $result = mysqli_query($conn, $query);
+
+          // Check if there are any products
+          if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+              // $discountedPrice = $row['price']+$row['price'];
+              ?>
+
+              <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="product-item">
+                  <div class="position-relative bg-light overflow-hidden">
+                    <img class="img-fluid w-100" src="img/<?= $row['productImage'] ?>" alt="" />
+
+                  </div>
+                  <div class="text-center p-4">
+                    <a class="d-block h5 mb-2" href="">
+                      <?= $row['productName'] ?>
+                    </a>
+                    <span class="text-primary me-1">$
+                      <?= $row['price'] ?>
+                    </span>
+                    <span class="text-body text-decoration-line-through">$
+                      <?= ($row['price']) + ($row['price'] * 0.25); ?>
+                    </span>
+                  </div>
+                  <div class="d-flex border-top">
+                    <small class="w-50 text-center border-end py-2">
+                      <a class="text-body" href="productDetails.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-eye text-primary me-2"></i>View
+                        detail</a>
+                    </small>
+                    <small class="w-50 text-center py-2">
+                      <a class="text-body" href="addToCart.php?id=<?= $row['id'] ?>"><i
+                          class="fa fa-shopping-bag text-primary me-2"></i>Add
+                        to cart</a>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            <?php }
+          } else {
+            echo "No products found.";
+          } ?>
+
+        </div>
+      </div>
+      <p></p>
+      <p></p>
+      <div class="col-12 text-center">
+        <a class="btn btn-primary rounded-pill py-3 px-5" href="product.php">Browse More Products</a>
+      </div>
     </div>
   </div>
 </div>
 <!-- Product End -->
-
 
 <!-- Firm Visit Start -->
 <!-- <div class="container-fluid bg-primary bg-icon mt-5 py-6">

@@ -1,5 +1,17 @@
-<?php include('header.php') ?>
+<?php 
+session_start();
+include('header.php');
+require_once("db_connection.php");
 
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+// if (!isset($_SESSION["admin_id"])) {
+//   echo "<script>window.location.href = 'login.php';</script>";
+//   exit;
+// }
+?>
 
     <!-- Page Header Start -->
     

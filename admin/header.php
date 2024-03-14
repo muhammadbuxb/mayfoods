@@ -72,6 +72,7 @@
                     <a href="index.php" class="nav-item nav-link active">Products</a>
                     <a href="addProduct.php" class="nav-item nav-link">Add Products</a>
                     <a href="order.php" class="nav-item nav-link">Orders</a>
+                    <a href="users.php" class="nav-item nav-link">Users</a>
                     <a href="Blog.php" class="nav-item nav-link">Blog</a>
                     <a href="addblog.php" class="nav-item nav-link">Add Blog</a>
                     <a href="Reviews.php" class="nav-item nav-link">Reviews</a>

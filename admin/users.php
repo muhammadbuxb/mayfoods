@@ -11,16 +11,8 @@ if ($conn->connect_error) {
 //   echo "<script>window.location.href = 'login.php';</script>";
 //   exit;
 // }
-
-require_once("db_connection.php");
-
-if(isset($_POST["statusBtn"])){
-    $orderId = $_POST['orderId'];
-    $updateQuery = "UPDATE `orders` SET `status` = 'Delivered' WHERE `orders`.`order_id` = $orderId  ";
-    $updateResult = $conn->query($updateQuery);
-}
-
 ?>
+
 
 
 <div class="container-fluid pt-5" style="margin-top:20vh">
@@ -35,18 +27,18 @@ if(isset($_POST["statusBtn"])){
                 <table class="table table-bordered text-center mb-0">
                     <thead class="text-dark">
                         <tr>
-                            <th class="align-middle">Order ID</th>
+                            <th class="align-middle">User ID</th>
                             <th class="align-middle">Name</th>
+                            <th class="align-middle">Email</th>
                             <th class="align-middle">Phone</th>
                             <th class="align-middle">Address</th>
-                            <th class="align-middle">Price</th>
-                            <th class="align-middle">Status</th>
+                            <th class="align-middle">Created on</th>
                             <th class="align-middle">View</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
                         <?php
-                        $sql = "SELECT * FROM orders";
+                        $sql = "SELECT * FROM users";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -56,10 +48,13 @@ if(isset($_POST["statusBtn"])){
                                 ?>
                                 <tr>
                                     <td class="align-middle">
-                                        <?php echo $row['order_id']; ?>
+                                        <?php echo $row['user_id']; ?>
                                     </td>
                                     <td class="align-middle">
                                         <?php echo $row['name']; ?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <?php echo $row['email']; ?>
                                     </td>
                                     <td class="align-middle">
                                         <?php echo $row['phone']; ?>
@@ -68,33 +63,10 @@ if(isset($_POST["statusBtn"])){
                                         <?php echo $row['address']; ?>
                                     </td>
                                     <td class="align-middle">
-                                        <?php echo '$' . $row['price']; ?>
+                                        <?php echo '' . $row['created']; ?>
                                     </td>
                                     <td class="align-middle">
-                                        <?php
-                                        if ($row['status'] === 'Pending') {
-                                            ?>
-                                            <form method="post" action="">
-                                                <input type="hidden" name="orderId" value="<?=$row['order_id']?>">
-                                                <button type="submit" name="statusBtn"
-                                                    class="btn btn-block btn-secondary my-2 py-2">
-                                                    <?= $row['status'] ?>
-                                                </button>
-                                            </form>
-
-                                            <?php
-                                        } else {
-                                            ?>
-                                            <button class="btn btn-block btn-primary my-2 py-2">
-                                                <?= $row['status'] ?>
-                                            </button>
-                                            <?php
-                                        }
-
-                                        ?>
-                                    </td>
-                                    <td class="align-middle">
-                                        <a href="vieworder.php?order_id=<?php echo $row['order_id']; ?>"
+                                        <a href="view_user_profile.php?user_id=<?php echo $row['user_id']; ?>"
                                             class="btn btn-sm btn-primary">
                                             View
                                         </a>
@@ -110,27 +82,6 @@ if(isset($_POST["statusBtn"])){
                 </table>
             </div>
 
-            <script>
-                function updateStatus(orderId) {
-                    // Assuming you're using AJAX to update the status
-                    // You can make an AJAX call to update the status in the database
-                    // Example:
-                    $.ajax({
-                        url: 'update_status.php',
-                        method: 'POST',
-                        data: { orderId: orderId },
-                        success: function (response) {
-                            // Handle success
-                            console.log('Status updated successfully.');
-                        },
-                        error: function (xhr, status, error) {
-                            // Handle error
-                            console.error('Error updating status:', error);
-                        }
-                    });
-                    console.log('Update status for order ID:', orderId);
-                }
-            </script>
 
         </div>
 
